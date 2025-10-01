@@ -103,3 +103,37 @@ h1 {
 .task-list li button:hover {
   background-color: #c82333;
 }
+
+.Buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.priorityButton{
+  background-color: #c82333;   /* rojo base */
+  color: #fff;                 /* texto legible */
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 150ms ease-in-out, transform 100ms ease-in-out;
+}
+
+.priorityButton:hover{
+  background-color: #a91c29;   /* rojo más oscuro */
+}
+
+.priorityButton:active{
+  transform: translateY(1px);
+}
+
+.priorityButton:focus-visible{
+  outline: 3px solid rgba(200,35,51,0.35);
+  outline-offset: 2px;
+}
+
+.priorityButton:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}

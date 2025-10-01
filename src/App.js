@@ -15,6 +15,23 @@ export default function App() {
       id: (crypto?.randomUUID?.() ?? Date.now()),
       text,
       completed: false,
+      priority:false,
+    };
+
+    setTasks((prev) => [...prev, task]);
+    setNewTask('');
+  };
+
+    const handlePriorityAddTask = (e) => {
+    e.preventDefault();
+    const text = newTask.trim();
+    if (!text) return;
+
+    const task = {
+      id: (crypto?.randomUUID?.() ?? Date.now()),
+      text,
+      completed: false,
+      priority:true,
     };
 
     setTasks((prev) => [...prev, task]);
@@ -43,8 +60,13 @@ export default function App() {
             onChange={(e) => setNewTask(e.target.value)}
             placeholder="Afegeix una nova tasca..."
           />
-          <button type="submit">Afegir</button>
+          <div className="Buttons">          
+            <button type="principalButton">Afegir</button>
+            <button type="priorityButton">Tasca prioritaria</button>
+          </div>
+
         </form>
+        
 
         <ul className="task-list">
           {tasks.map((task) => (
