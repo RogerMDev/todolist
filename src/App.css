@@ -110,18 +110,19 @@ h1 {
   gap: 10px;
 }
 
-.priorityButton{
-  background-color: #c82333;   /* rojo base */
-  color: #fff;                 /* texto legible */
-  border: none;
+.priorityButton {
+  background-color: #fff;      /* fondo blanco */
+  color: #c82333;              /* texto rojo */
+  border: 2px solid #c82333;   /* borde rojo para mantener coherencia */
   padding: 0.6rem 1rem;
   border-radius: 0.5rem;
   cursor: pointer;
-  transition: background-color 150ms ease-in-out, transform 100ms ease-in-out;
+  transition: background-color 150ms ease-in-out, color 150ms ease-in-out, transform 100ms ease-in-out;
 }
-
-.priorityButton:hover{
-  background-color: #a91c29;   /* rojo más oscuro */
+ 
+.priorityButton:hover {
+  background-color: #c82333;   /* rojo al pasar el ratón */
+  color: #fff;                 /* texto blanco */
 }
 
 .priorityButton:active{
@@ -136,4 +137,10 @@ h1 {
 .priorityButton:disabled{
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* Estilo para tareas prioritarias */
+.priority-task span {
+  color: #c82333; /* rojo fuerte */
+  font-weight: 600;
 }

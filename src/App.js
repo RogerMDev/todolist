@@ -6,32 +6,15 @@ export default function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
 
-  const handleAddTask = (e) => {
-    e.preventDefault();
+  const handleAddTask = (priority = false) => {
     const text = newTask.trim();
     if (!text) return;
 
     const task = {
-      id: (crypto?.randomUUID?.() ?? Date.now()),
+      id: crypto?.randomUUID?.() ?? Date.now(),
       text,
       completed: false,
-      priority:false,
-    };
-
-    setTasks((prev) => [...prev, task]);
-    setNewTask('');
-  };
-
-    const handlePriorityAddTask = (e) => {
-    e.preventDefault();
-    const text = newTask.trim();
-    if (!text) return;
-
-    const task = {
-      id: (crypto?.randomUUID?.() ?? Date.now()),
-      text,
-      completed: false,
-      priority:true,
+      priority,
     };
 
     setTasks((prev) => [...prev, task]);
@@ -53,24 +36,29 @@ export default function App() {
       <div className="todo-container">
         <h1>La Meva Llista de Tasques</h1>
 
-        <form onSubmit={handleAddTask} className="task-form">
+        <form className="task-form">
           <input
             type="text"
             value={newTask}
             onChange={(e) => setNewTask(e.target.value)}
             placeholder="Afegeix una nova tasca..."
           />
-          <div className="Buttons">          
-            <button type="principalButton">Afegir</button>
-            <button type="priorityButton">Tasca prioritaria</button>
+          <div className="Buttons">
+            <button type="button" className="principalButton" onClick={() => handleAddTask(false)}>
+              Afegir
+            </button>
+            <button type="button" className="priorityButton" onClick={() => handleAddTask(true)}>
+              Tasca prioritària
+            </button> 
           </div>
-
         </form>
         
-
         <ul className="task-list">
           {tasks.map((task) => (
-            <li key={task.id} className={task.completed ? 'completed' : ''}>
+              <li
+                key={task.id}
+                className={`${task.completed ? 'completed' : ''} ${task.priority ? 'priority-task' : ''}`}
+              >
               <span onClick={() => handleToggleComplete(task.id)}>
                 {task.text}
               </span>
