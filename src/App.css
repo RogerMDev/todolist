@@ -10,7 +10,7 @@ body {
  
 .app-container {
   width: 100%;
-  max-width: 500px;
+  max-width: 800px;
   padding: 20px;
 }
  
@@ -144,3 +144,48 @@ h1 {
   color: #c82333; /* rojo fuerte */
   font-weight: 600;
 }
+
+/* --- Ajustes per al nou selector de data --- */
+.task-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;         /* ✅ Evita que es comprimi tot en pantalles petites */
+  gap: 12px;               /* ✅ Espai natural entre text, datepicker i botons */
+  padding: 15px;
+}
+
+/* Contenidor del DatePicker */
+.task-due-date {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 200px;        /* ✅ fa el selector més ample */
+  margin-left: 10px;
+}
+
+/* Text sota el DatePicker */
+.task-due-date p {
+  font-size: 0.9em;
+  margin-top: 6px;
+  color: #555;
+}
+
+/* Millora de visibilitat per al DatePicker (TextField MUI) */
+.task-due-date .MuiTextField-root {
+  width: 200px;            /* ✅ ajusta el quadre del selector */
+}
+
+/* Opcional: més espai entre el text i el botó d'eliminar */
+.task-list li button {
+  margin-left: 15px;
+}
+
+.task-due-date .MuiTextField-root {
+  width: 140px;  /* ✅ ajusta aquí la mida */
+}
+
+.task-due-date label {
+  font-size: 0.85em; /* opcional: etiqueta més discreta */
+}
+

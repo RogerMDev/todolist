@@ -1,24 +1,25 @@
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useState } from 'react';
+import TaskForm from './components/TaskForm';
+import TaskList from './components/TaskList';
 import './App.css';
 
 export default function App() {
-  // Estat
-  const [tasks, setTasks] = useState([]);
-  const [newTask, setNewTask] = useState('');
+  const [tasks, setTasks] = useState([
+    { id: 1, text: 'Comprar pa', completed: false, priority: false, dueDate: null },
+    { id: 2, text: 'Acabar informe', completed: true, priority: false, dueDate: new Date().toISOString() },
+  ]);
 
-  const handleAddTask = (priority = false) => {
-    const text = newTask.trim();
-    if (!text) return;
-
+  const handleAddTask = (text, priority = false) => {
     const task = {
       id: crypto?.randomUUID?.() ?? Date.now(),
       text,
       completed: false,
       priority,
+      dueDate: null, // ✅ Nou camp
     };
-
     setTasks((prev) => [...prev, task]);
-    setNewTask('');
   };
 
   const handleToggleComplete = (taskId) => {
@@ -31,44 +32,33 @@ export default function App() {
     setTasks((prev) => prev.filter((t) => t.id !== taskId));
   };
 
-  return (
-    <div className="app-container">
-      <div className="todo-container">
-        <h1>La Meva Llista de Tasques</h1>
+  // ✅ Nova funció per actualitzar només la data límit
+  const handleUpdateTaskDate = (taskId, newDate) => {
+    setTasks((prev) =>
+      prev.map((task) =>
+        task.id === taskId
+          ? { ...task, dueDate: newDate ? newDate.toISOString() : null }
+          : task
+      )
+    );
+  };
 
-        <form className="task-form">
-          <input
-            type="text"
-            value={newTask}
-            onChange={(e) => setNewTask(e.target.value)}
-            placeholder="Afegeix una nova tasca..."
+  return (
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <div className="app-container">
+        <div className="todo-container">
+          <h1>La Meva Llista de Tasques</h1>
+
+          <TaskForm onAddTask={handleAddTask} />
+
+          <TaskList
+            tasks={tasks}
+            onToggleComplete={handleToggleComplete}
+            onDeleteTask={handleDeleteTask}
+            onUpdateTaskDate={handleUpdateTaskDate}
           />
-          <div className="Buttons">
-            <button type="button" className="principalButton" onClick={() => handleAddTask(false)}>
-              Afegir
-            </button>
-            <button type="button" className="priorityButton" onClick={() => handleAddTask(true)}>
-              Tasca prioritària
-            </button> 
-          </div>
-        </form>
-        
-        <ul className="task-list">
-          {tasks.map((task) => (
-              <li
-                key={task.id}
-                className={`${task.completed ? 'completed' : ''} ${task.priority ? 'priority-task' : ''}`}
-              >
-              <span onClick={() => handleToggleComplete(task.id)}>
-                {task.text}
-              </span>
-              <button type="button" onClick={() => handleDeleteTask(task.id)}>
-                Eliminar
-              </button>
-            </li>
-          ))}
-        </ul>
+        </div>
       </div>
-    </div>
+    </LocalizationProvider>
   );
 }
